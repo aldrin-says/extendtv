@@ -1,0 +1,109 @@
+name: Build ExtendTV APK
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.7
+      - name: Unpack project
+        run: |
+          cat > p.b64 <<'DATA'
+          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
+          DATA
+          base64 -d p.b64 | tar xz
+      - name: Build
+        run: cd ExtendTV && gradle assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ExtendTV-apk
+          path: ExtendTV/app/build/outputs/apk/debug/app-debug.apk
